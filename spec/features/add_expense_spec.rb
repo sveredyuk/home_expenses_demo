@@ -11,6 +11,34 @@ RSpec.describe 'Add expense' do
     end
   end
 
+  scenario 'impossible add 0 cost expense' do
+    within '#t-add-expense-form' do
+      fill_in 'expense[amount]', with: '0'
+
+      click_button 'Add'
+    end
+
+    within '#t-expenses-list' do
+      expect(page).not_to have_content '0'
+      expect(page).not_to have_content 'Food'
+      expect(page).not_to have_content Time.current.to_date
+    end
+  end
+
+  scenario 'impossible add negative cost expense' do
+    within '#t-add-expense-form' do
+      fill_in 'expense[amount]', with: '-333'
+
+      click_button 'Add'
+    end
+
+    within '#t-expenses-list' do
+      expect(page).not_to have_content '-333'
+      expect(page).not_to have_content 'Food'
+      expect(page).not_to have_content Time.current.to_date
+    end
+  end
+
   scenario 'can submit expense and has total amount' do
     within '#t-add-expense-form' do
       fill_in 'expense[amount]', with: '30'
