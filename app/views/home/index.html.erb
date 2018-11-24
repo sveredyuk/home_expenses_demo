@@ -1,0 +1,45 @@
+<div id='t-add-expense-form'>
+  <%= form_with model: expense, url: expense_path do |f| %>
+    <%= f.text_field :amount %>
+    <%= f.select :category_id, categories_names_ids %>
+    <%= f.submit 'Add' %>
+  <% end %>
+</div>
+
+<div id='t-expenses-list'>
+  <table>
+    <thead>
+      <tr>
+        <td>
+          Amount
+        </td>
+        <td>
+          Category
+        </td>
+        <td>
+          When
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <% expenses.each do |expense| %>
+        <tr id="t-expense-<%= expense.id %>">
+          <td>
+            <%= expense.amount %>
+          </td>
+          <td>
+            <%= category_id_to_name(expense.category_id) %>
+          </td>
+          <td>
+            <%= expense.created_at.to_date %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+<div id="t-total-amount">
+  <%= total_amount %>
+</div>
